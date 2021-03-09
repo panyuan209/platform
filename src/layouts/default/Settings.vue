@@ -88,7 +88,7 @@
             no-gutters
           >
             <v-col cols="auto">
-              Dark Mode
+              黑暗模式
             </v-col>
 
             <v-spacer />
@@ -110,7 +110,7 @@
             no-gutters
           >
             <v-col cols="auto">
-              Sidebar Mini
+              侧边栏
             </v-col>
 
             <v-spacer />
@@ -156,7 +156,6 @@
         '#FF5252',
       ],
       menu: false,
-      saveImage: '',
     }),
 
     computed: {
@@ -170,7 +169,6 @@
         'drawer@image',
       ]),
       ...get('user', [
-        'images',
         'gradients',
       ]),
     },

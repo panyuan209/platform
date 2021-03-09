@@ -2,9 +2,8 @@
   <v-app-bar
     id="default-app-bar"
     app
-    absolute
+    fixed
     class="v-bar--underline"
-    color="transparent"
     :clipped-left="$vuetify.rtl"
     :clipped-right="!$vuetify.rtl"
     height="70"
