@@ -1,25 +1,21 @@
 <template>
   <v-navigation-drawer
     id="default-drawer"
-    v-model="drawer"
     :dark="dark"
     :right="$vuetify.rtl"
-    :src="''"
     :mini-variant.sync="mini"
     mini-variant-width="80"
     app
     width="260"
   >
-    <!-- <template
-      v-if="drawerImage"
+    <template
       #img="props"
     >
       <v-img
-        :key="image"
         :gradient="gradient"
         v-bind="props"
       />
-    </template> -->
+    </template>
 
     <div class="px-2">
       <default-drawer-header />
@@ -55,7 +51,6 @@
       ...get('user', [
         'dark',
         'gradient',
-        'image',
       ]),
       ...get('app', [
         'items',
