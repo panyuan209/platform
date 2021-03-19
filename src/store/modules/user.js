@@ -24,7 +24,7 @@ const mutations = make.mutations(state)
 
 const actions = {
   fetch: ({ commit }) => {
-    const local = localStorage.getItem('vuetify@user') || '{}'
+    const local = localStorage.getItem('lys@user') || '{}'
     const user = JSON.parse(local)
 
     for (const key in user) {
@@ -38,7 +38,7 @@ const actions = {
   update: ({ state }) => {
     if (!IN_BROWSER) return
 
-    localStorage.setItem('vuetify@user', JSON.stringify(state))
+    localStorage.setItem('lys@user', JSON.stringify(state))
   },
 }
 

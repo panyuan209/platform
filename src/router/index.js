@@ -22,15 +22,25 @@ const router = new Router({
   routes: [
     layout('Default', [
       route('首页', { default: 'Dashboard' }),
-      // Pages
       route('用户管理', { default: 'User' }, 'user'),
+    ]),
+    layout('Fullscreen', [
+      route('登录', { default: 'Login' }, 'login'),
+    ]),
+    layout('Default', [
       abort('Error'),
     ]),
   ],
 })
 
 router.beforeEach((to, from, next) => {
-  return to.path.endsWith('/') ? next() : next(trailingSlash(to.path))
+  if (!to.path.endsWith('/')) return next(trailingSlash(to.path))
+  const token = localStorage.getItem('lys@Authorization')
+  if (to.path.includes('login')) {
+    return token ? next(to.query.redirectUrl) : next()
+  }
+  if (!token) return next('/login/?redirectUrl=' + to.path)
+  next()
 })
 
 export default router
