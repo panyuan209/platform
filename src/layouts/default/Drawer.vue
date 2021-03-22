@@ -1,6 +1,7 @@
 <template>
   <v-navigation-drawer
     id="default-drawer"
+    v-model="drawer"
     :dark="dark"
     :right="$vuetify.rtl"
     :mini-variant.sync="mini"

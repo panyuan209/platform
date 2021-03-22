@@ -2,8 +2,7 @@
   <v-list-item class="mb-0 justify-space-between pl-3">
     <v-list-item-avatar>
       <v-img
-        :src="
-          require('@/assets/vmd.svg')"
+        :src="require('@/assets/logo.png')"
       />
     </v-list-item-avatar>
 

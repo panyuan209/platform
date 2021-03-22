@@ -34,9 +34,11 @@
         <app-bar-item
           v-else
           :key="`item-${i}`"
-          to="/"
         >
-          <v-list-item-title v-text="p.title" />
+          <v-list-item-title
+            @click="p.action"
+            v-text="p.title"
+          />
         </app-bar-item>
       </template>
     </v-list>
@@ -49,10 +51,25 @@
 
     data: () => ({
       profile: [
-        { title: '账号设置' },
-        { title: '系统设置' },
+        {
+          title: '账号设置',
+          action () {
+            console.log(111)
+          },
+        },
+        {
+          title: '系统设置',
+          action () {
+            console.log(222)
+          },
+        },
         { divider: true },
-        { title: '退出登录' },
+        {
+          title: '退出登录',
+          action () {
+            console.log(333)
+          },
+        },
       ],
     }),
   }
