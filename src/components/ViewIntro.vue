@@ -7,7 +7,7 @@
 
     <div
       v-if="link"
-      class="body-2 font-weight-light"
+      class="text-body-2 font-weight-light"
     >
       Please checkout the <a
         :href="`https://vuetifyjs.com/en/${link}`"

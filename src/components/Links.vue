@@ -23,7 +23,7 @@
         cols="12"
         md="auto"
       >
-        <div class="body-1 font-weight-light pt-6 pt-md-0 text-center">
+        <div class="text-body-1 font-weight-light pt-6 pt-md-0 text-center">
           &copy; {{ (new Date()).getFullYear() }} 莱茵斯（厦门）科技有限公司 版权所有
         </div>
       </v-col>

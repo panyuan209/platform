@@ -23,6 +23,7 @@ const router = new Router({
     layout('Default', [
       route('首页', { default: 'Dashboard' }),
       route('用户管理', { default: 'User' }, 'user'),
+      route('物联卡管理', { default: 'IotCard/Index' }, 'iot-card'),
     ]),
     layout('Fullscreen', [
       route('登录', { default: 'Login' }, 'login'),
