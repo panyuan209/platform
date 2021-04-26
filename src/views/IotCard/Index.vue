@@ -4,258 +4,336 @@
     fluid
     tag="section"
   >
-    <template>
-      <v-data-table
-        v-model="selected"
-        :headers="headers"
-        :items="desserts"
-        :search="search"
-        show-select
-        item-key="name"
-        sort-by="calories"
-        class="elevation-1"
-      >
-        <template v-slot:top>
-          <v-toolbar
-            flat
-            color="white"
-          >
-            <v-toolbar-title>物联卡管理</v-toolbar-title>
-            <v-spacer />
-            <v-text-field
-              v-model="search"
-              append-icon="mdi-magnify"
-              label="Search"
-              single-line
-              hide-details
-            />
-            <v-divider
-              class="mx-4"
-              inset
-              vertical
-            />
-            <v-spacer />
-            <v-dialog
-              v-model="dialog"
-              max-width="500px"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <vue-json-to-csv
-                  :json-data="desserts"
-                  :csv-title="output"
-                >
-                  <v-btn
-                    color="primary"
-                    dark
-                    class="mb-2"
-                    v-bind="attrs"
-                    v-on="on"
+    <v-data-table
+      v-model="selected"
+      item-key="id"
+      :headers="headers"
+      :items="cards"
+      show-select
+      class="elevation-2"
+    >
+      <template v-slot:item.actions="{ item }">
+        <v-dialog
+          v-model="dialog"
+          max-width="500px"
+        >
+          <v-card>
+            <v-card-title>
+              <span class="headline">
+                编辑
+              </span>
+            </v-card-title>
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
                   >
-                    导出 <i
-                      class="mdi mdi-export-variant"
-                      aria-hidden="true"
+                    <v-text-field
+                      v-model="editedItem.id"
+                      label="ID"
                     />
-                  </v-btn>
-                </vue-json-to-csv>
-              </template>
-              <v-card>
-                <v-card-title>
-                  <span class="headline">{{ formTitle }}</span>
-                </v-card-title>
-
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col
-                        cols="12"
-                        sm="6"
-                        md="4"
-                      >
-                        <v-text-field
-                          v-model="editedItem.name"
-                          label="Dessert name"
-                        />
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        sm="6"
-                        md="4"
-                      >
-                        <v-text-field
-                          v-model="editedItem.calories"
-                          label="Calories"
-                        />
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        sm="6"
-                        md="4"
-                      >
-                        <v-text-field
-                          v-model="editedItem.fat"
-                          label="Fat (g)"
-                        />
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        sm="6"
-                        md="4"
-                      >
-                        <v-text-field
-                          v-model="editedItem.carbs"
-                          label="Carbs (g)"
-                        />
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        sm="6"
-                        md="4"
-                      >
-                        <v-text-field
-                          v-model="editedItem.protein"
-                          label="Protein (g)"
-                        />
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-
-                <v-card-actions>
-                  <v-spacer />
-                  <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="close"
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
                   >
-                    取消
-                  </v-btn>
-                  <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="save"
+                    <v-text-field
+                      v-model="editedItem.iccid"
+                      label="ICCID"
+                    />
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
                   >
-                    保存
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </v-toolbar>
-        </template>
-        <template v-slot:item.actions="{ item }">
-          <v-icon
-            small
-            class="mr-2"
-            @click="editItem(item)"
-          >
-            mdi-pencil
-          </v-icon>
-          <v-icon
-            small
-            class="mr-2"
-            @click="editItem(item)"
-          >
-            mdi-pencil
-          </v-icon>
-          <v-icon
-            small
-            @click="deleteItem(item)"
-          >
-            mdi-delete
-          </v-icon>
-        </template>
-        <template v-slot:no-data>
-          <v-btn
-            color="primary"
-            @click="initialize"
-          >
-            重置
-          </v-btn>
-        </template>
-      </v-data-table>
-    </template>
+                    <v-text-field
+                      v-model="editedItem.status"
+                      label="状态"
+                    />
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.startTime"
+                      label="开卡时间"
+                    />
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.balance"
+                      label="余额"
+                    />
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.remark"
+                      label="备注"
+                    />
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="close"
+              >
+                取消
+              </v-btn>
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="save"
+              >
+                保存
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <v-dialog
+          v-model="dialogShow"
+          max-width="500px"
+        >
+          <v-card>
+            <v-card-title>
+              <span class="headline">
+                查看
+              </span>
+            </v-card-title>
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.id"
+                      label="ID"
+                    />
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.iccid"
+                      label="ICCID"
+                    />
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.status"
+                      label="状态"
+                    />
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.startTime"
+                      label="开卡时间"
+                    />
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.balance"
+                      label="余额"
+                    />
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.remark"
+                      label="备注"
+                    />
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
+        <v-dialog
+          v-model="dialogDelete"
+          max-width="500px"
+        >
+          <v-card>
+            <v-card-title class="headline">
+              <v-spacer />
+              确定要删除此 Iot Card 吗？
+              <v-spacer />
+            </v-card-title>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="closeDelete"
+              >
+                取消
+              </v-btn>
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="deleteItemConfirm"
+              >
+                确定
+              </v-btn>
+              <v-spacer />
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <v-icon
+          small
+          class="mr-2"
+          color="blue"
+          @click="editItem(item)"
+        >
+          编辑
+        </v-icon>
+        <v-icon
+          small
+          class="mr-2"
+          color="blue"
+          @click="showItem(item)"
+        >
+          查看
+        </v-icon>
+        <v-icon
+          small
+          color="red"
+          @click="deleteItem(item)"
+        >
+          删除
+        </v-icon>
+      </template>
+    </v-data-table>
   </v-container>
 </template>
 
 <script>
   export default {
     name: 'IotCard',
-    data: () => ({
-      search: '',
-      selected: [],
-      dialog: false,
-      headers: [
-        {
-          text: 'id',
-          align: 'start',
-          sortable: false,
-          value: 'id',
+    data () {
+      return {
+        selected: [],
+        dialog: false,
+        dialogShow: false,
+        dialogDelete: false,
+        editedIndex: -1,
+        editedItem: {
+          id: 0,
+          iccid: 0,
+          status: '',
+          startTime: '',
+          balance: '',
+          remark: '',
         },
-        { text: 'iccid', value: 'iccid' },
-        { text: '状态', value: 'state' },
-        { text: '开卡时间', value: 'startTime' },
-        { text: '余额', value: 'balance' },
-        { text: '备注', value: 'remark' },
-        { text: '操作', value: 'actions', sortable: false },
-      ],
-      desserts: [],
-      editedIndex: -1,
-      editedItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
-      },
-      defaultItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
-      },
-    }),
-
-    computed: {
-      formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-      },
-    },
-
-    watch: {
-      dialog (val) {
-        val || this.close()
-      },
-    },
-
-    created () {
-      this.initialize()
-    },
-
-    methods: {
-      initialize () {
-        this.desserts = [
+        defaultItem: {
+          id: 0,
+          iccid: 0,
+          status: '',
+          startTime: '',
+          balance: '',
+          remark: '',
+        },
+        headers: [
+          { text: 'ID', value: 'id', align: 'start' },
+          { text: 'ICCID', value: 'iccid' },
+          { text: '状态', value: 'status' },
+          { text: '开卡时间', value: 'startTime' },
+          { text: '余额', value: 'balance' },
+          { text: '备注', value: 'remark' },
+          { text: '操作', value: 'actions' },
+        ],
+        cards: [
           {
             id: 1,
-            iccid: 159234698,
-            state: '使用中',
-            startTime: '2021-04-20',
-            balance: 400.00,
-            remark: '备注',
+            iccid: '898600MFSSYYGXXXXXXP',
+            status: '未激活',
+            startTime: '2021-04-25 12:10:16',
+            balance: '400.00元',
+            remark: '备注1',
           },
-        ]
-      },
-
+          {
+            id: 2,
+            iccid: '898601YY8SSXXXXXXXXP',
+            status: '使用中',
+            startTime: '2020-12-11 14:13:25',
+            balance: '3000.00元',
+            remark: '备注2',
+          },
+          {
+            id: 3,
+            iccid: '898603YYXMHHHXXXXXXP',
+            status: '停机',
+            startTime: '2018-04-23 19:20:58',
+            balance: '12540.00元',
+            remark: '备注3',
+          },
+        ],
+      }
+    },
+    methods: {
       editItem (item) {
-        this.editedIndex = this.desserts.indexOf(item)
+        this.editedIndex = this.cards.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
-
-      deleteItem (item) {
-        const index = this.desserts.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+      showItem (item) {
+        this.editedIndex = this.cards.indexOf(item)
+        this.editedItem = Object.assign({}, item)
+        this.dialogShow = true
       },
-
+      deleteItem (item) {
+        this.editedIndex = this.cards.indexOf(item)
+        this.editedItem = Object.assign({}, item)
+        this.dialogDelete = true
+      },
+      closeDelete () {
+        this.dialogDelete = false
+        this.$nextTick(() => {
+          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedIndex = -1
+        })
+      },
+      deleteItemConfirm () {
+        this.cards.splice(this.editedIndex, 1)
+        this.closeDelete()
+      },
       close () {
         this.dialog = false
         this.$nextTick(() => {
@@ -263,19 +341,14 @@
           this.editedIndex = -1
         })
       },
-
       save () {
         if (this.editedIndex > -1) {
-          Object.assign(this.desserts[this.editedIndex], this.editedItem)
+          Object.assign(this.cards[this.editedIndex], this.editedItem)
         } else {
-          this.desserts.push(this.editedItem)
+          this.cards.push(this.editedItem)
         }
         this.close()
       },
     },
   }
 </script>
-
-<style lang="sass">
-
-</style>
