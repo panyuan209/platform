@@ -12,6 +12,16 @@
       show-select
       class="elevation-2"
     >
+      <template v-slot:top>
+        <v-toolbar flat>
+          <v-toobar-title>物联卡管理</v-toobar-title>
+          <v-divider
+            vertical
+            inset
+            class="mx-4"
+          />
+        </v-toolbar>
+      </template>
       <template v-slot:item.actions="{ item }">
         <v-dialog
           v-model="dialog"
