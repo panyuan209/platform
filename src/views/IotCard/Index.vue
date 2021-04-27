@@ -9,17 +9,36 @@
       item-key="id"
       :headers="headers"
       :items="cards"
+      :search="search"
       show-select
       class="elevation-2"
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toobar-title>物联卡管理</v-toobar-title>
+          <v-toolbar-title>物联卡管理</v-toolbar-title>
           <v-divider
             vertical
             inset
             class="mx-4"
           />
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="搜索"
+            single-line
+            hide-details
+          />
+          <v-spacer />
+          <v-select
+            v-model="selectedStatus"
+            :items="cardsStatus"
+            label="筛选"
+            single-line
+            hide-details
+            @click="selectClick"
+          />
+          <v-spacer />
+          <v-btn>导入/导出</v-btn>
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
@@ -260,6 +279,9 @@
     data () {
       return {
         selected: [],
+        search: '',
+        cardsStatus: ['未激活', '使用中', '停止'],
+        selectedStatus: [],
         dialog: false,
         dialogShow: false,
         dialogDelete: false,
@@ -281,13 +303,13 @@
           remark: '',
         },
         headers: [
-          { text: 'ID', value: 'id', align: 'start' },
-          { text: 'ICCID', value: 'iccid' },
-          { text: '状态', value: 'status' },
-          { text: '开卡时间', value: 'startTime' },
-          { text: '余额', value: 'balance' },
-          { text: '备注', value: 'remark' },
-          { text: '操作', value: 'actions' },
+          { text: 'ID', value: 'id', align: 'start', sortable: false },
+          { text: 'ICCID', value: 'iccid', sortable: false },
+          { text: '状态', value: 'status', sortable: false },
+          { text: '开卡时间', value: 'startTime', sortable: false },
+          { text: '余额', value: 'balance', sortable: false },
+          { text: '备注', value: 'remark', sortable: false },
+          { text: '操作', value: 'actions', sortable: false },
         ],
         cards: [
           {
@@ -316,6 +338,13 @@
           },
         ],
       }
+    },
+    computed: {
+      statusFilter () {
+        this.cards.filter((card) => {
+          return this.selectedStatus.indexOf(card.status) !== -1
+        })
+      },
     },
     methods: {
       editItem (item) {
@@ -358,6 +387,10 @@
           this.cards.push(this.editedItem)
         }
         this.close()
+      },
+      selectClick () {
+        console.log('-------')
+        console.log(this.statusFilter)
       },
     },
   }
