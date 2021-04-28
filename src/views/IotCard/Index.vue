@@ -8,7 +8,7 @@
       v-model="selected"
       item-key="id"
       :headers="headers"
-      :items="cards"
+      :items="filterItems"
       :search="search"
       show-select
       class="elevation-2"
@@ -35,7 +35,6 @@
             label="筛选"
             single-line
             hide-details
-            @click="selectClick"
           />
           <v-spacer />
           <v-btn>导入/导出</v-btn>
@@ -280,8 +279,8 @@
       return {
         selected: [],
         search: '',
-        cardsStatus: ['未激活', '使用中', '停止'],
-        selectedStatus: [],
+        cardsStatus: ['未激活', '使用中', '停机'],
+        selectedStatus: '',
         dialog: false,
         dialogShow: false,
         dialogDelete: false,
@@ -340,9 +339,9 @@
       }
     },
     computed: {
-      statusFilter () {
-        this.cards.filter((card) => {
-          return this.selectedStatus.indexOf(card.status) !== -1
+      filterItems () {
+        return this.cards.filter((card) => {
+          return !this.selectedStatus || this.selectedStatus.indexOf(card.status) !== -1
         })
       },
     },
@@ -387,10 +386,6 @@
           this.cards.push(this.editedItem)
         }
         this.close()
-      },
-      selectClick () {
-        console.log('-------')
-        console.log(this.statusFilter)
       },
     },
   }
