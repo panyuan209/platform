@@ -37,7 +37,20 @@
             hide-details
           />
           <v-spacer />
-          <v-btn>导入/导出</v-btn>
+          <v-btn
+            color="primary"
+            class="mr-6"
+            @click="importTable"
+          >
+            导入
+          </v-btn>
+          <v-btn
+            color="primary"
+            class="mr-6"
+            @click="exportTable"
+          >
+            导出
+          </v-btn>
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
@@ -273,6 +286,7 @@
 </template>
 
 <script>
+  import excel from '@/views/IotCard/excel'
   export default {
     name: 'IotCard',
     data () {
@@ -386,6 +400,14 @@
           this.cards.push(this.editedItem)
         }
         this.close()
+      },
+      exportTable () {
+        excel.exportExcel(this.cards, 'IotCard')
+      },
+      importTable () {
+        excel.importExcel((value) => {
+          this.cards.push(value)
+        })
       },
     },
   }
