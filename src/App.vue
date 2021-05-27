@@ -11,7 +11,7 @@
   export default {
     name: 'App',
     metaInfo: {
-      title: '莱茵斯科技智慧用电专家',
+      title: '电弧性电气火灾监控网页系统',
       titleTemplate: '%s',
       htmlAttrs: { lang: 'zh-cn' },
       meta: [

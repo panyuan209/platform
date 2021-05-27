@@ -1,6 +1,5 @@
 import XLSX from 'xlsx'
-
-function exportExcel (json, fileName) {
+export function exportExcel (json, fileName) {
   const data = []
   const keyArray = []
 
@@ -46,6 +45,24 @@ function importExcel (callback) {
   inputObj.setAttribute('name', 'file')
   inputObj.setAttribute('style', 'visibility:hidden')
   inputObj.setAttribute('accept', '.xlsx,.xls,.csv')
+  // inputObj.addEventListener('change', ev => {
+  //   const files = ev.target.files[0]
+  //   console.log(files)
+  //   // const data = { uploadFile: files }
+  //   const data = new FormData()
+  //   data.append('file', files)
+  //   console.log(data.get('file'))
+  //   const formData = {
+  //     uploadFile: files,
+  //   }
+  //   const dataObj = qs.stringify(formData)
+  //   // const dataObj = formData
+  //   importCardList(dataObj).then(res => {
+  //     console.log(res)
+  //   }).catch(err => {
+  //     console.log(err)
+  //   })
+  // })
   inputObj.addEventListener('change', evt => {
     const files = evt.target.files
     const fileReader = new FileReader()

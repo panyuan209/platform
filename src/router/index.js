@@ -1,7 +1,7 @@
 // Imports
 import Vue from 'vue'
 import Router from 'vue-router'
-import { trailingSlash } from '@/util/helpers'
+// import { trailingSlash } from '@/util/helpers'
 import {
   layout,
   route,
@@ -25,23 +25,23 @@ const router = new Router({
       route('用户管理', { default: 'User' }, 'user'),
       route('物联卡管理', { default: 'IotCard/Index' }, 'iot-card'),
     ]),
-    layout('Fullscreen', [
-      route('登录', { default: 'Login' }, 'login'),
-    ]),
+    // layout('Fullscreen', [
+    //   route('登录', { default: 'Login' }, 'login'),
+    // ]),
     layout('Default', [
       abort('Error'),
     ]),
   ],
 })
 
-router.beforeEach((to, from, next) => {
-  if (!to.path.endsWith('/')) return next(trailingSlash(to.path))
-  const token = localStorage.getItem('lys@Authorization')
-  if (to.path.includes('login')) {
-    return token ? next(to.query.redirectUrl) : next()
-  }
-  if (!token) return next('/login/?redirectUrl=' + to.path)
-  next()
-})
+// router.beforeEach((to, from, next) => {
+//   if (!to.path.endsWith('/')) return next(trailingSlash(to.path))
+//   const token = localStorage.getItem('lys@Authorization')
+//   if (to.path.includes('login')) {
+//     return token ? next(to.query.redirectUrl) : next()
+//   }
+//   if (!token) return next('/login/?redirectUrl=' + to.path)
+//   next()
+// })
 
 export default router

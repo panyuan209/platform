@@ -8,7 +8,7 @@
 
     <v-list-item-content class="pl-2">
       <v-list-item-title class="text-h5">
-        <span>莱茵斯智慧用电</span>
+        <span>电弧性电气火灾监控</span>
       </v-list-item-title>
     </v-list-item-content>
   </v-list-item>
